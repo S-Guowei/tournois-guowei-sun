@@ -1,0 +1,16 @@
+{% if tournoi %}
+    <h2> {{tournoi.name}} </h2>
+    <h3> by {{tournoi.place}} </h3>
+    <table border="1">
+        <tr>
+            <td>Number</td>
+        </tr>
+        {% for poule in tournoi.poule_set.all %}
+            <tr>
+                <td>{{poule.number}}</td>
+            </tr>
+        {% endfor %}
+        </table>
+{% endif %}
+
+<a href="{% url 'disks:tournois' %}"> Back to tournois list </a>

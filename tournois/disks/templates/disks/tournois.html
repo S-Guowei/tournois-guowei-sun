@@ -1,0 +1,17 @@
+{% if tournois %}
+    <h2> The list of tournois </h2>
+    <table border="1">
+        <tr>
+            <td style="text-align:center;"> name </td>
+            <td style="text-align:center;"> place </td>
+        <tr>
+        {% for tournoi in tournois %}
+            <tr>
+                <td> <a href="{% url 'disks:poules' tournoi.id %}"> {{tournoi.name}} </a></td>
+                <td> {{tournoi.place}}<td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <h1> No tournoi available.</h1>
+{% endif %}
