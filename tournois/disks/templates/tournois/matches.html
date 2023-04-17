@@ -1,0 +1,23 @@
+{% if poule%}
+    <h2> {{poule.tournoi}}, Poule{{poule.number}} </h2>
+    <h3> by {{poule.tournoi.place}} </h3>
+    <table border="1">
+        <tr>
+            <td>Match</td>
+        </tr>
+        {% for match in poule.match_set.all%}
+
+            <tr>
+                <td>{{match.score1}} {{match.equipe1}} VS {{match.equipe2}} {{match.score2}} </td>
+            </tr>
+         {% endfor %}
+        </table>
+
+{% else %}
+<h1> No match available.</h1>
+{% endif %}
+
+<a href="{% url 'tournois:poules' poule.tournoi.id %}"> Back to poule list </a>
+<br>
+<a href="{% url 'tournois:tournois' %}"> Back to tournoi list </a>
+

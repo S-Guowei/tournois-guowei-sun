@@ -4,11 +4,13 @@
         <tr>
             <td style="text-align:center;"> name </td>
             <td style="text-align:center;"> place </td>
+            <td style="text-align:center;"> time </td>
         <tr>
         {% for tournoi in tournois %}
             <tr>
-                <td> <a href="{% url 'disks:poules' tournoi.id %}"> {{tournoi.name}} </a></td>
-                <td> {{tournoi.place}}<td>
+                <td> <a href="{% url 'tournois:poules' tournoi.id %}"> {{tournoi.name}} </a></td>
+                <td> {{tournoi.place}}</td>
+                <td> Date: from {{tournoi.date_start}} to {{tournoi.date_end}} </td>
             </tr>
         {% endfor %}
     </table>

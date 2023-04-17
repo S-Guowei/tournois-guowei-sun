@@ -28,6 +28,7 @@ class Match(models.Model):
     score2 = models.IntegerField(default=0)
     equipe1 = models.ForeignKey('Equipe',on_delete=models.CASCADE,related_name='equipe01',null=True)
     equipe2 = models.ForeignKey('Equipe',on_delete=models.CASCADE,related_name='equipe02',null=True)
+    poule = models.ForeignKey('Poule',on_delete=models.CASCADE,null=True)
     
     
     def __str__(self):

@@ -7,10 +7,10 @@
         </tr>
         {% for poule in tournoi.poule_set.all %}
             <tr>
-                <td>{{poule.number}}</td>
+                <td><a href="{% url 'tournois:matches' poule.tournoi.id poule.id %}"> {{tournoi.name}}, Poule {{poule.id}}</a></td>
             </tr>
         {% endfor %}
         </table>
 {% endif %}
 
-<a href="{% url 'disks:tournois' %}"> Back to tournois list </a>
+<a href="{% url 'tournois:tournois' %}"> Back to tournois list </a>
