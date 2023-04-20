@@ -1,0 +1,56 @@
+{% if poule%}
+    <h2> {{poule.tournoi}}, Poule{{poule.number}} </h2>
+    <h3> by {{poule.tournoi.location}} </h3>
+    <h2> Pool {{poule.number}} </h2>
+
+    <div>
+        <h2> Teams </h2>
+
+        <table border='1'>
+            <tr>
+                <td>Team name</td>
+                <td>Pool points</td>
+                <td>Scored</td>
+                <td>Conceded</td>
+            </tr>
+           {% for id,point in points.items %}
+                <tr>
+                
+                    <td> {{id}}</td>
+                    <td> {{point.0}}</td>
+                    <td> {{point.1}}</td>
+                    <td> {{point.2}}</td>
+                </tr>
+
+
+            {% endfor %} 
+            </table>
+    </div>
+
+    <div>
+        <h2> Matches </h2>
+        <table border="1">
+            <tr>
+                <td>Match</td>
+                <td>Location</td>
+                <td>Date</td>
+            </tr>
+            {% for match in poule.match_set.all%}
+
+                <tr>
+                    <td>{{match.score1}} {{match.equipe1}} VS {{match.equipe2}} {{match.score2}} </td>
+                    <td>{{match.location}}</td>
+                    <td>{{match.time.date}}
+                </tr>
+            {% endfor %}
+            </table>
+    </div>
+
+{% else %}
+<h1> No match available.</h1>
+{% endif %}
+
+<a href="{% url 'tournois:poules' poule.tournoi.id %}"> Back to poule list </a>
+<br>
+<a href="{% url 'tournois:tournois' %}"> Back to tournoi list </a>
+

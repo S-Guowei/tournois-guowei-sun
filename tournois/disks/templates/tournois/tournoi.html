@@ -1,5 +1,6 @@
 {% if tournois %}
     <h2> The list of tournois </h2>
+    <p> {{tournois}}</p>
     <table border="1">
         <tr>
             <td style="text-align:center;"> name </td>
@@ -9,7 +10,7 @@
         {% for tournoi in tournois %}
             <tr>
                 <td> <a href="{% url 'tournois:poules' tournoi.id %}"> {{tournoi.name}} </a></td>
-                <td> {{tournoi.place}}</td>
+                <td> {{tournoi.location}}</td>
                 <td> Date: from {{tournoi.date_start}} to {{tournoi.date_end}} </td>
             </tr>
         {% endfor %}
