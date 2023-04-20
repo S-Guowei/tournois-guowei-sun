@@ -59,7 +59,7 @@ class Poule(models.Model):
                     elif  scored.get(k) == scored.get(k_n):
                         if conceded.get(k) < conceded.get(k):
                             k_n = k
-            points[Equipe.objects.get(pk=k_n)] = [point.get(k_n), scored.get(k_n), conceded.get(k_n)]
+            points[Equipe.objects.get(pk=k_n).name] = [point.get(k_n), scored.get(k_n), conceded.get(k_n)]
             point.pop(k_n)
         return points
         
