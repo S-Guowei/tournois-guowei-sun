@@ -92,36 +92,14 @@ class Player(models.Model):
     def __str__(self):
         return self.name
     
-class User(models.Model):
-    gender = (
-        ('male','Monsieur'),
-        ('female','Madame'),
-    )
-    name = models.CharField(max_length=128,unique=True)
-    password = models.CharField(max_length=256)
-    email = models.EmailField(unique=True)
-    sex = models.CharField(max_length=32,choices=gender,default='Monsieur')
-    c_time = models.DateTimeField(auto_now_add=True)
-    
-    def __str__(self):
-        return self.name
-    
-    class Meta:
-        ordering = ['c_time']
-        verbose_name = 'User'
-        verbose_name_plural = 'User'
-        
 class Comment(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=255)
-    url = models.URLField(blank=True)
-    text = models.TextField(null=True)
-    created_time = models.DateTimeField(auto_now_add=True)
-
-    post = models.ForeignKey('Match',on_delete=models.CASCADE,null=True)
+    match = models.ForeignKey('Match',on_delete=models.CASCADE,null=True)
+    body = models.CharField(max_length=500,null=True)
+    time = models.DateTimeField(auto_now_add=True)
+    user = models.CharField(max_length=50, null=True)
 
     def __str__(self):
-        return self.text[:20]
+        return self.body[:20]
 
     
     

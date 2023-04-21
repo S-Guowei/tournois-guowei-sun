@@ -1,12 +1,16 @@
 from django.shortcuts import render,get_list_or_404,get_object_or_404,redirect
 from django.contrib.auth import authenticate
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
-from .forms import LoginForm
+from .forms import CommentForm
 
 from .models import Tournoi
 from .models import Poule
 from .models import Match
-from .models import User
+
 
 import hashlib
 
@@ -40,26 +44,36 @@ def register(request):
     return render(request,"tournois/register.html")
 
 def login(request):
-    if request.method == "POST":
-        username = request.POST.get('username',None)
-        password = request.POST.get('password', None)
-        if username and password:  # make username and passwords are not null
-            username = username.strip()
-            # more other verifications.....
-            try:
-                user = User.objects.get(name=username)
-                if user.password == password:
-                    return redirect('/tournois/')
-                else:
-                    message = "password incorrect"
-            except:
-                message = "User not exists"
-            return render(request, 'tournois/login.html',{'message':message})
-            
-    return render(request, 'tournois/login.html')
+
+    # next = request.GET.get('next', '')
+
+    # if request.method == 'POST':
+    #     form = LoginForm(request.POST)
+    #     if form.is_valid():
+    #         username = form.cleaned_data['username']
+    #         password = form.cleaned_data['password']
+
+    #         user = auth.authenticate(username=username, password=password)
+
+    #         if user is not None and user.is_active:
+    #             auth.login(request, user)
+    #             if  next == "":
+    #                 return HttpResponseRedirect(reverse('tournois:tournois', args=[user.id]))
+    #             else:
+    #                 return HttpResponseRedirect(next)
+
+    #         else:
+                
+    #            return render(request, 'login', {'form': form,})
+    # else:
+    #     form = LoginForm()
+    pass
+
+    return render(request, 'tournois/tournois.html')
 
 def logout(request):
-    # response=HttpResponseRedirect('')
-    # response.delete_cookie("username")
+
     pass
-    return redirect('')
+    return redirect('/tournois/')
+
+    

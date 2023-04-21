@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% comment %}
+Extend site-wide base HTML template located in main templates/ dir
+(same level as manage.py)
+{% endcomment %}
+{% block title %}login{% endblock title %}
+
+{% block css %}
+    {% comment %} <link rel="stylesheet" href="{% static 'css/login.css' %}"> {% endcomment %}
+{% endblock %}
+
+
+{% block content %}
+
+<h4>Login</h4>
+<hr>
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+    <div class="container-fluid">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+        <a class="nav-link active" href="{% url 'tournois:tournois' %}">Home</a>
+    </ul>
+    </div>
+</nav>
+
+<hr>
+<div class="card bg-light text-dark">
+    <div class="card-body">
+
+        {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+        {% endif %}
+
+        {% if next %}
+            {% if user.is_authenticated %}
+            <p>Your account doesn't have access to this page. To proceed,
+            please login with an account that has access.</p>
+            {% else %}
+            <p>Please login to see this page.</p>
+            {% endif %}
+        {% endif %}
+
+        <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+
+        <div class="mb-3 mt-3">
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+        </div>
+        <div class="mb-3 mt-3">
+        <td>{{ form.password.label_tag }} </td>
+        <td>{{ form.password }}</td>
+        </div>
+
+        <div class="mb-3 mt-3">
+        <input type="submit" class="btn btn-primary" value="login" />
+        <input type="hidden" name="next" value="{{ next }}" />
+        </div>
+        </form>
+
+        {# Assumes you setup the password_reset view in your URLconf #}
+    </div>
+</div>
+
+{% endblock %}
+
+

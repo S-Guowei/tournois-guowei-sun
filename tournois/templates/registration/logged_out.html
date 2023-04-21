@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% comment %}
+Extend site-wide base HTML template located in main templates/ dir
+(same level as manage.py)
+{% endcomment %}
+{% block title %}login{% endblock title %}
+
+{% block css %}
+    {% comment %} <link rel="stylesheet" href="{% static 'css/login.css' %}"> {% endcomment %}
+{% endblock %}
+
+{% block content %}
+
+<h4>Logged out</h4>
+<hr>
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+    <div class="container-fluid">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+        <a class="nav-link active" href="{% url 'tournois:tournois' %}">Home</a>
+    </ul>
+    </div>
+</nav>
+
+<hr>
+<div class="card bg-light text-dark">
+    <div class="card-body">
+
+<div class= "mb-3 mt-3" >
+<p>Logged out!</p>
+</div>
+<a href="{% url 'login'%}">Click here to login again.</a>
+
+</div>
+</div>
+{% endblock %}

@@ -29,6 +29,20 @@ Extend site-wide base HTML template located in main templates/ dir
             <li class="nav-item">
             <a class="nav-link disabled" href="#">Match</a>
             </li>
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                   
+                    <a class="nav-link disabled" href="#">{{request.user.username}}</a>
+                    
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout'%}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login'%}">Login</a>
+                </li>
+            {% endif %} 
         </ul>
         </div>
     </nav>

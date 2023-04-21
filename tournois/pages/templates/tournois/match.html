@@ -13,6 +13,7 @@ Extend site-wide base HTML template located in main templates/ dir
     <h3> {{match.poule.tournoi}}, Poule{{match.poule.number}} </h3>
     <h4> by {{match.poule.tournoi.location}} </h4>
     <hr>
+
     <nav class="navbar navbar-expand-sm bg-light navbar-light">
         <div class="container-fluid">
         <ul class="navbar-nav">
@@ -28,7 +29,22 @@ Extend site-wide base HTML template located in main templates/ dir
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'tournois:match' match.id%}">{{match.equipe1}} VS {{match.equipe2}}</a>
             </li>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+               
+                <a class="nav-link disabled" href="#">{{request.user.username}}</a>
+                
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout'%}">Logout</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login'%}">Login</a>
+            </li>
+        {% endif %} 
         </ul>
+
         </div>
     </nav>
     <hr>
@@ -40,12 +56,36 @@ Extend site-wide base HTML template located in main templates/ dir
         </div>
     </div>
     <hr>
+
+    {% if request.user.is_authenticated %}
+
+    <form action="tournois:match">
+        <div class="mb-3 mt-3">
+          <label for="comment">Add a Comment:</label>
+          <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    {% else %}
     <div class="card bg-light text-dark">
         <div class="card-body">
-        <h6> Comments </h6>
-        <p> Please <a href="{% url 'tournois:login' %}">login</a> to comment this match </p>
+        <h6> Add Comments </h6>
+        <p> Please <a href="{% url 'login' %}?next={{ request.path }}">login</a> to comment this match </p>
         </div>
     </div>
+    {% endif %}
+    <hr>
+    <h6>Comments</h6>
+    {% for comment in match.comment_set.all %}
+    <div class="card bg-light text-dark">
+        <div class="card-body">
+        <p class="text-primary" class="card-title">user: {{comment.user}}  {{comment.time}}</p>
+        <p class="card-text">{{comment.body}}</p>
+        </div>
+    </div>
+    {% endfor %}
+
 
 {% endif %}
 {% endblock content %}

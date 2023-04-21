@@ -1,4 +1,5 @@
 from django.urls import path
+from django.urls import include
 
 from . import views
 
@@ -10,6 +11,8 @@ urlpatterns = [
     path('poule/<int:poule_id>/', views.poule, name = 'poule'),
     path('match/<int:match_id>/', views.match, name = 'match'),
     path('register/', views.register, name='register'),
-    path('login/', views.login, name='login'),
-    path('logout/', views.logout, name='logout'),
+    path('account/login/', views.login, name='login'),
+    path('account/logout/', views.logout, name='logout'),
+    
+    # path('comment/<int:match_id>',views.match, name='comment'),
 ]

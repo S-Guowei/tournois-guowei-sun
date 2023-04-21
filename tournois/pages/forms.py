@@ -1,6 +1,9 @@
 from django import forms
+from .models import Comment
 
-class LoginForm(forms.Form):
-    username=forms.CharField()
-    password=forms.CharField(widget=forms.PasswordInput)
+
+class CommentForm(forms.ModelForm):
+    model = Comment
+    fields = ['body','user']
+    
 
