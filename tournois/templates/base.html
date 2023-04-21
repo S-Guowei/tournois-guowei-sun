@@ -1,0 +1,46 @@
+{% load static %}
+
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Tournois{% endblock %}</title>
+
+    {# Load Bootstrap CSS #}
+    {% bootstrap_css %}
+
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+    
+    <div class="container">
+        <div class="row pb-3">
+            <header>
+                <img src="{% static 'images/champion.png' %}" width=25px alt="logo"/>
+                Gestion des tournois avec des poules<br>
+                <div align=center>
+                <img src="{% static 'images/pngegg.png' %}" width=480px alt="logo"/>
+                </div>
+            </header>
+        </div>
+        
+
+        {% block content %}{% endblock %}
+
+        <div class="row pt-5">
+            <footer>
+                <em>&copy; ISAE-SUPAERO</em>
+            </footer>
+        </div>
+    </div>
+    {# Load Bootstrap Javascript #}
+    {% bootstrap_javascript %}
+</body>
+</html> 
+
+

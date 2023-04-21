@@ -1,14 +1,11 @@
 from django.contrib import admin
 
-from .models import Player
-from .models import Equipe
-from .models import Match
-from .models import Poule
-from .models import Tournoi
+from . import models
 
 
-admin.site.register(Player)
-admin.site.register(Equipe)
-admin.site.register(Match)
-admin.site.register(Poule)
-admin.site.register(Tournoi)
+admin.site.register(models.Player)
+admin.site.register(models.Equipe)
+admin.site.register(models.Match)
+admin.site.register(models.Poule)
+admin.site.register(models.Tournoi)
+admin.site.register(models.User)

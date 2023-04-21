@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% comment %}
+Extend site-wide base HTML template located in main templates/ dir
+(same level as manage.py)
+{% endcomment %}
+
+{% block title %}tournoi{% endblock title %}
+
+{% block content %}
+
+
+{% if tournois %}
+    <div class="container mt-3">
+    <h3> The list of tournois </h3>
+    <hr>
+    <nav class="navbar navbar-expand-sm bg-light navbar-light">
+        <div class="container-fluid">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+            <a class="nav-link active" href="{% url 'tournois:tournois' %}">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link disabled" href="#">Tournoi</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link disabled" href="#">Poule</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link disabled" href="#">Match</a>
+            </li>
+        </ul>
+        </div>
+    </nav>
+    <hr>
+
+    <div class="card bg-light text-dark">
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th> Name </th>
+                            <th> Place </th>
+                            <th> From </th>
+                            <th> To </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tournoi in tournois %}
+                            <tr>
+                                <td> <a href="{% url 'tournois:tournoi' tournoi.id %}"> {{tournoi.name}} </a></td>
+                                <td> {{tournoi.location}}</td>
+                                <td> {{tournoi.date_start}} </td>
+                                <td> {{tournoi.date_end}} </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    </div>
+
+{% else %}
+    <h1> No tournoi available.</h1>
+{% endif %}
+
+{% endblock content %}

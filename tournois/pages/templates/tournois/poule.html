@@ -1,23 +1,77 @@
-{% if tournoi %}
-    <h2> {{tournoi.name}} </h2>
-    <h3> by {{tournoi.location}} </h3>
+{% extends 'base.html' %}
+{% load bootstrap5 %}
 
-    <table border="1">
-        <tr>
-            <td>Number</td>
-            <td>Les Équipes</td>
-        </tr>
-        {% for poule in tournoi.poule_set.all %}
-            <tr>
-                <td><a href="{% url 'tournois:matches' poule.tournoi.id poule.id %}"> {{tournoi.name}}, Poule {{poule.id}}</a></td>
-                <td>
-                    {% for equipe in poule.equipes.all %}
-                        <p>{{equipe.name}}</p>
-                    {% endfor %}
-                </td>
-            </tr>
+{% comment %}
+Extend site-wide base HTML template located in main templates/ dir
+(same level as manage.py)
+{% endcomment %}
+
+{% block title %}poule{% endblock title %}
+
+{% block content %}
+
+{% if poule%}
+    <h3> {{poule.tournoi}}, Poule{{poule.number}} </h3>
+    <h4> by {{poule.tournoi.location}} </h4>
+    <hr>
+    <nav class="navbar navbar-expand-sm bg-light navbar-light">
+        <div class="container-fluid">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+            <a class="nav-link active" href="{% url 'tournois:tournois' %}">Home</a>
+            </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'tournois:tournoi' poule.tournoi.id%}">{{poule.tournoi.name}}</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'tournois:poule' poule.id%}">Poule{{poule.id}}</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link disabled" href="#">Match</a>
+            </li>
+        </ul>
+        </div>
+    </nav>
+<hr>
+
+<div class="card bg-light text-dark">
+    <div class="card-body">
+        <h5> Teams </h5>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th> Team name </th>
+                    <th> Pool points </th>
+                    <th> Scored </th>
+                    <th> Conceded </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for id,point in points.items %}
+                <tr>
+                    <td> {{id}}</td>
+                    <td> {{point.0}}</td>
+                    <td> {{point.1}}</td>
+                    <td> {{point.2}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+         <h5> Matches </h5>
+         {% for match in poule.match_set.all%}
+         <div class="card">
+            <div class="card-body">
+            <h6 class="text-primary" class="card-title">
+                <a href="{% url 'tournois:match' match.id %}">
+                    {{match.score1}} {{match.equipe1}} vs {{match.equipe2}} {{match.score2}}</a></h6>
+            <p class="card-text">{{match.location}}, {{match.time.date}}</p>
+            </div>
+        </div>
         {% endfor %}
-    </table>
+        </div>
+    </div>
+{% else %}
+<h1> No match available.</h1>
 {% endif %}
 
-<a href="{% url 'tournois:tournois' %}"> Back to tournois list </a>
+{% endblock content %}

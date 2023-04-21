@@ -32,6 +32,7 @@ class Poule(models.Model):
                 scored[match.equipe2.id] = scored.get(match.equipe2.id, 0) + match.score2
                 conceded[match.equipe2.id] = conceded.get(match.equipe2.id, 0) + match.score1
                 point[match.equipe1.id] = point.get(match.equipe1.id, 0) + 3
+                point[match.equipe2.id] = point.get(match.equipe2.id, 0) + 0
             elif match.score1 == match.score2:
                 scored[match.equipe1.id] = scored.get(match.equipe1.id, 0) + match.score1
                 conceded[match.equipe1.id] = conceded.get(match.equipe1.id, 0) + match.score2
@@ -45,6 +46,7 @@ class Poule(models.Model):
                 scored[match.equipe2.id] = scored.get(match.equipe2.id, 0) + match.score2
                 conceded[match.equipe2.id] = conceded.get(match.equipe2.id, 0) + match.score1
                 point[match.equipe2.id] = point.get(match.equipe2.id, 0) + 3
+                point[match.equipe1.id] = point.get(match.equipe1.id, 0) + 0
         # make a rank of teams first by points and second by recorded, third by conceded
         length = len(point)
         points = {} 
@@ -62,8 +64,7 @@ class Poule(models.Model):
             points[Equipe.objects.get(pk=k_n).name] = [point.get(k_n), scored.get(k_n), conceded.get(k_n)]
             point.pop(k_n)
         return points
-        
-                
+            
 class Match(models.Model):
     time = models.DateTimeField(null=True)
     location = models.CharField(max_length=200)
@@ -76,7 +77,6 @@ class Match(models.Model):
     
     def __str__(self):
         return self.equipe1.name+" vs "+self.equipe2.name
-    
     
 class Equipe(models.Model):
     name = models.CharField(max_length=200)
@@ -92,7 +92,36 @@ class Player(models.Model):
     def __str__(self):
         return self.name
     
+class User(models.Model):
+    gender = (
+        ('male','Monsieur'),
+        ('female','Madame'),
+    )
+    name = models.CharField(max_length=128,unique=True)
+    password = models.CharField(max_length=256)
+    email = models.EmailField(unique=True)
+    sex = models.CharField(max_length=32,choices=gender,default='Monsieur')
+    c_time = models.DateTimeField(auto_now_add=True)
     
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        ordering = ['c_time']
+        verbose_name = 'User'
+        verbose_name_plural = 'User'
+        
+class Comment(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=255)
+    url = models.URLField(blank=True)
+    text = models.TextField(null=True)
+    created_time = models.DateTimeField(auto_now_add=True)
+
+    post = models.ForeignKey('Match',on_delete=models.CASCADE,null=True)
+
+    def __str__(self):
+        return self.text[:20]
 
     
     

@@ -1,6 +1,6 @@
-point = {2: 5, 5: 5, 3: 7, 4: 5}
-scored = {2: 5, 5: 5, 3: 6, 4: 6}
-conceded = {2: 5, 5: 6, 3: 7, 4: 3}
+point = {1: 7, 2: 5, 3: 4, 4: 0}
+scored = {1: 5, 2: 4, 3: 4, 4: 1}
+conceded = {1: 1, 2: 2, 3: 4, 4: 7}
 
 # point = sorted(point.items(), key=lambda x:x[1], reverse=True)   #sort the points
 # scored = sorted(scored.items(), key=lambda x:x[1], reverse=True)   #sort the points
@@ -19,7 +19,7 @@ for i in range(length):
             print('loop',i,'key',k)
             if scored.get(k) > scored.get(k_n):
                 k_n = k
-                print(k_n)
+            
             elif  scored.get(k) == scored.get(k_n):
                 if conceded.get(k) < conceded.get(k):
                     k_n = k           
